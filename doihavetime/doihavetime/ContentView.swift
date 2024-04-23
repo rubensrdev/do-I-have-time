@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var startTime: Date = .now
+    
     var body: some View {
         VStack {
             Text("Do I Have Time?")
@@ -20,6 +23,22 @@ struct ContentView: View {
                 .font(.subheadline)
                 .foregroundStyle(.gray)
             
+            ZStack {
+                
+                RoundedRectangle(cornerRadius: 25.0)
+                    .foregroundStyle(.myGray)
+                
+                HStack {
+                        
+                    Text("Start Watching")
+                    
+                    DatePicker( "Start watching", selection: $startTime, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                    
+                }
+                
+            }
+            .frame(height: 100)
             
             Spacer()
         }

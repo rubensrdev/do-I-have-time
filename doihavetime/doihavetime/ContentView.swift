@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var defaultDurationTimes: [String] = [
-        "30 min",
-        "90 min",
-        "100 min",
-        "120 min"
+    var defaultDurationTimes: [Int] = [
+        30,
+        90,
+        100,
+        120
     ]
     
     @State var startTime: Date = .now
-    @State var duration: Date = .now
+    @State var duration: Int = 90
     
     var body: some View {
         VStack {
@@ -74,15 +74,28 @@ struct ContentView: View {
                         
                         Text("Selected duration: \(duration) min")
                         
+                        Button("", systemImage: "minus.circle", action: { duration -= 1 })
+                            .labelsHidden()
+                            .foregroundStyle(.myPurple)
+                        Button("", systemImage: "plus.circle", action: { duration += 1 })
+                            .labelsHidden()
+                            .foregroundStyle(.myPurple)
+                        
                     }
                     .padding(.bottom)
                     
                     HStack {
                         
                         ForEach(0..<defaultDurationTimes.count) { i in
-                            Button("\(defaultDurationTimes[i])", action: {
-                                
+                            let defaultDurationSelected = defaultDurationTimes[i]
+                            Button("\(defaultDurationSelected) min", action: {
+                                duration = defaultDurationSelected
+                                print("Changed duration to \(defaultDurationSelected) min")
                             })
+                            .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                            .foregroundStyle(.myPurple)
+                            .bold()
+                            
                         }
                         
                     }

@@ -18,6 +18,7 @@ struct ContentView: View {
     
     @State var startTime: Date = .now
     @State var duration: Int = 90
+    @State var finishTime: Date = Date.now
     
     var body: some View {
         VStack {
@@ -74,10 +75,16 @@ struct ContentView: View {
                         
                         Text("Selected duration: \(duration) min")
                         
-                        Button("", systemImage: "minus.circle", action: { duration -= 1 })
+                        Button("", systemImage: "minus.circle", action: {
+                            duration -= 1
+                            calculateFinishTime()
+                        })
                             .labelsHidden()
                             .foregroundStyle(.myPurple)
-                        Button("", systemImage: "plus.circle", action: { duration += 1 })
+                        Button("", systemImage: "plus.circle", action: {
+                            duration += 1
+                            calculateFinishTime()
+                        })
                             .labelsHidden()
                             .foregroundStyle(.myPurple)
                         
@@ -91,6 +98,7 @@ struct ContentView: View {
                             Button("\(defaultDurationSelected) min", action: {
                                 duration = defaultDurationSelected
                                 print("Changed duration to \(defaultDurationSelected) min")
+                                calculateFinishTime()
                             })
                             .clipShape(RoundedRectangle(cornerRadius: 25.0))
                             .foregroundStyle(.myPurple)
@@ -99,16 +107,48 @@ struct ContentView: View {
                         }
                         
                     }
-                    .padding(.bottom)
                     
                 }
                 
             }
-            .frame(height: 250)
+            .frame(height: 150)
+            
+            ZStack {
+                
+                RoundedRectangle(cornerRadius: 25.0)
+                    .foregroundStyle(.black)
+                
+                VStack {
+                    Text(finishTime, style: .time)
+                        .foregroundStyle(.white)
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .bold()
+                        .fontDesign(.serif)
+                    
+                    HStack {
+                        Text(startTime, style: .time)
+                            .foregroundStyle(.white)
+                            .font(.subheadline)
+                        Text("+ \(duration) min")
+                            .foregroundStyle(.white)
+                            .font(.subheadline)
+                    }
+                }
+                
+            }
+            .frame(height: 100)
             
             Spacer()
         }
         .padding()
+    }
+    
+    /* TODO
+     This function calculate the  the finish time for the movie based in the duration  chosed and  the start watching
+     */
+    func calculateFinishTime() {
+        let interval: TimeInterval = TimeInterval(duration)
+        finishTime = startTime.addingTimeInterval(interval)
     }
     
 }

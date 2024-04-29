@@ -17,7 +17,7 @@ struct ContentView: View {
     ]
     
     @State var startTime: Date = .now
-    @State var duration: Int = 90
+    @State var duration: Int = 60
     @State var finishTime: Date = Date.now
     
     var body: some View {
@@ -144,6 +144,9 @@ struct ContentView: View {
             Spacer()
         }
         .padding()
+        .onAppear(perform: {
+            calculateFinishTime()
+        })
     }
     
     /*

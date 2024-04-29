@@ -48,6 +48,9 @@ struct ContentView: View {
                     
                     DatePicker( "Start watching", selection: $startTime, displayedComponents: .hourAndMinute)
                         .labelsHidden()
+                        .onChange(of: startTime, perform: { value in
+                            calculateFinishTime()
+                        })
                 }
                 
             }

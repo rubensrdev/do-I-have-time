@@ -143,12 +143,11 @@ struct ContentView: View {
         .padding()
     }
     
-    /* TODO
+    /*
      This function calculate the  the finish time for the movie based in the duration  chosed and  the start watching
      */
     func calculateFinishTime() {
-        let interval: TimeInterval = TimeInterval(duration)
-        finishTime = startTime.addingTimeInterval(interval)
+        finishTime = startTime.addingTimeInterval(TimeInterval(duration * 60))
     }
     
 }
